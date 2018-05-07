@@ -13,7 +13,7 @@ chmod 700 ./*.sh
 ./install.sh
 ```
 
-# Test
+# Confirm Installation
 ```
-./test.sh
+./confirm.sh
 ```
