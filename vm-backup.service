@@ -3,7 +3,7 @@ Description=QEMU-KVM VM hot backup with external snapshots
 
 [Service]
 Type=simple
-ExecStart=/var/lib/libvirt/images/vm-backup.sh rsync_user@10.191.80.5::vm2/
+ExecStart=/usr/bin/env HOME=/root /var/lib/libvirt/images/vm-backup.sh rsync_user@10.191.80.5::vm2/
 
 [Install]
 WantedBy=multi-user.target
