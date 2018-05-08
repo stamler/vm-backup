@@ -33,8 +33,12 @@ function backup_vm() {
   printf "\b✓ "
   for t in $IMAGES; do
       printf "\n▲ rsyncing $t\n"
-      rsync -av -e ssh $t $RSYNCDEST --progress
-      rsync -av -e ssh "$DOMAIN.xml" "$RSYNCDEST/XML/" --progress
+      # --inplace is used to write to the existing file on the destination
+      # This ensures that btrfs snapshots on the destination are efficient COW
+      # rather than entirely new files
+      # Note that this behaviour may change if the destination is local
+      rsync -av --inplace -e ssh $t $RSYNCDEST --progress
+      rsync -av --inplace -e ssh "$DOMAIN.xml" "$RSYNCDEST/XML/" --progress
   done
 
   # Get backup images before merge
