@@ -74,7 +74,10 @@ function backup_vm() {
 #list all vms to iterate over
 exec >> /var/lib/libvirt/images/vm-backup.log 2>&1
 date +"%Y-%m-%d %R"
-DOMAINS=`virsh list --name`
+
+# use awk to remove VMs that should be skipped. In this case skip the
+# AWS-Storage-Gateway because it can be easily re-created.
+DOMAINS=`virsh list --name | awk '{gsub("AWS-Storage-Gateway","");print}'`
 RSYNCDEST="$1"
 
 if [[  -z $RSYNCDEST ]]; then
